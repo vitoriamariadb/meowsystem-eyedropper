@@ -9,7 +9,7 @@
 //! a second applet.
 //!
 //! The interface is served at the conventional path
-//! `/io/github/nalladev/CosmicExtAppletEyedropper` under the app's well-known
+//! `/io/github/meowsystem/Eyedropper` under the app's well-known
 //! name.  If another instance already owns the name (or the session bus is
 //! unavailable, e.g. in a sandbox without `--own-name`), this subscription
 //! simply stays idle and the applet behaves normally.

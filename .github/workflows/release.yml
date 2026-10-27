@@ -51,7 +51,7 @@ jobs:
           just build-deb
           just build-rpm
 
-          NAME="cosmic-ext-applet-eyedropper"
+          NAME="meowsystem-eyedropper"
           ARCH=`uname -m`
 
           mkdir ./$NAME
@@ -103,18 +103,18 @@ jobs:
       - name: Build Flatpak
         run: |
           flatpak-builder --force-clean --ccache --mirror-screenshots-url=https://dl.flathub.org/media/ \
-            --install-deps-from=flathub --repo=flatpak-repo build-dir flatpak/io.github.nalladev.CosmicExtAppletEyedropper.json
+            --install-deps-from=flathub --repo=flatpak-repo build-dir flatpak/io.github.meowsystem.Eyedropper.json
 
       - name: Create Flatpak bundle
         run: |
-          flatpak build-bundle flatpak-repo cosmic-ext-applet-eyedropper.flatpak \
-            io.github.nalladev.CosmicExtAppletEyedropper
+          flatpak build-bundle flatpak-repo meowsystem-eyedropper.flatpak \
+            io.github.meowsystem.Eyedropper
 
       - name: Upload Flatpak artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cosmic-ext-applet-eyedropper-flatpak
-          path: cosmic-ext-applet-eyedropper.flatpak
+          name: meowsystem-eyedropper-flatpak
+          path: meowsystem-eyedropper.flatpak
           retention-days: 30
 
   release:

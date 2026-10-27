@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# System dependencies required to build cosmic-ext-applet-eyedropper.
+# System dependencies required to build meowsystem-eyedropper.
 # These are the -dev packages needed by the Rust crate's C dependencies
 # (libcosmic, pipewire, smithay-client-toolkit, etc.)
 

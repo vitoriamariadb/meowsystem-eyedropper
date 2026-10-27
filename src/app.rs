@@ -245,7 +245,7 @@ impl cosmic::Application for AppModel {
     type Flags = Flags;
     type Message = Message;
 
-    const APP_ID: &'static str = "io.github.nalladev.CosmicExtAppletEyedropper";
+    const APP_ID: &'static str = "io.github.meowsystem.Eyedropper";
 
     fn core(&self) -> &cosmic::Core {
         &self.core

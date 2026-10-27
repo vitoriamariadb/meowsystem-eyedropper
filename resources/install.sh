@@ -9,9 +9,9 @@ mkdir -p ~/.local/bin \
     "${XDG_DATA_HOME:-~/.local/share}/appdata" \
     "${XDG_DATA_HOME:-~/.local/share}/icons/hicolor/scalable/apps"
 
-cp ./cosmic-ext-applet-eyedropper ~/.local/bin/
+cp ./meowsystem-eyedropper ~/.local/bin/
 cp ./*.desktop "${XDG_DATA_HOME:-~/.local/share}/applications/"
 cp ./*.metainfo.xml "${XDG_DATA_HOME:-~/.local/share}/appdata/"
-cp ./*.svg "${XDG_DATA_HOME:-~/.local/share}/icons/hicolor/scalable/apps/io.github.nalladev.CosmicExtAppletEyedropper-symbolic.svg"
+cp ./*.svg "${XDG_DATA_HOME:-~/.local/share}/icons/hicolor/scalable/apps/io.github.meowsystem.Eyedropper-symbolic.svg"
 
 echo "Installed. Restart cosmic-panel (pkill cosmic-panel) then add the applet."

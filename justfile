@@ -1,6 +1,6 @@
-name := 'cosmic-ext-applet-eyedropper'
-appid := 'io.github.nalladev.CosmicExtAppletEyedropper'
-repo-url := 'https://github.com/nalladev/cosmic-ext-applet-eyedropper.git'
+name := 'meowsystem-eyedropper'
+appid := 'io.github.meowsystem.Eyedropper'
+repo-url := 'https://github.com/vitoriamariadb/meowsystem-eyedropper.git'
 
 rootdir := ''
 prefix := '/usr'
@@ -65,9 +65,9 @@ run *args:
 # Installs files
 install:
     install -Dm0755 {{ cargo-target-dir / 'release' / name }} {{bin-dst}}
-    install -Dm0644 resources/app.desktop {{desktop-dst}}
-    install -Dm0644 resources/app.metainfo.xml {{appdata-dst}}
-    install -Dm0644 resources/icon.svg {{icon-dst}}
+    install -Dm0644 resources/io.github.meowsystem.Eyedropper.desktop {{desktop-dst}}
+    install -Dm0644 resources/io.github.meowsystem.Eyedropper.metainfo.xml {{appdata-dst}}
+    install -Dm0644 resources/io.github.meowsystem.Eyedropper-symbolic.svg {{icon-dst}}
 
 # Uninstalls installed files
 uninstall:
@@ -128,7 +128,7 @@ vendor-flatpak:
 flatpak-install: vendor-flatpak
     #!/usr/bin/env bash
     set -euo pipefail
-    APP="io.github.nalladev.CosmicExtAppletEyedropper"
+    APP="io.github.meowsystem.Eyedropper"
     LOCAL="flatpak/local-build.json"
     python3 scripts/flatpak-manifest.py to-dir "$LOCAL"
     trap 'rm -f "$LOCAL"' EXIT
@@ -142,7 +142,7 @@ flatpak-install: vendor-flatpak
 
 # Remove the local test build.
 flatpak-uninstall:
-    flatpak uninstall --user io.github.nalladev.CosmicExtAppletEyedropper
+    flatpak uninstall --user io.github.meowsystem.Eyedropper
     echo "To get the production copy back, reinstall from the COSMIC store."
 
 # Bump the version in Cargo.toml, run cargo check, commit everything staged, and tag.
@@ -168,7 +168,7 @@ release version message='':
     norm_version=`bash -c 'v="{{version}}"; echo "${v#v}"'` && \
     python3 scripts/update-metainfo-release.py "$norm_version" "{{message}}" "{{repo-url}}" && \
     python3 scripts/flatpak-manifest.py to-git "$norm_version" "{{repo-url}}" && \
-    git add resources/app.metainfo.xml flatpak/io.github.nalladev.CosmicExtAppletEyedropper.json && \
+    git add resources/io.github.meowsystem.Eyedropper.metainfo.xml flatpak/io.github.meowsystem.Eyedropper.json && \
     just tag "{{version}}" "{{message}}" && \
     git push origin main && \
     git push origin v"$norm_version"

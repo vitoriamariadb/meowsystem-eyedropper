@@ -1086,7 +1086,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "cosmic-ext-applet-eyedropper"
+name = "meowsystem-eyedropper"
 version = "0.6.2"
 dependencies = [
  "anyhow",

@@ -1,10 +1,10 @@
 [package]
-name = "cosmic-ext-applet-eyedropper"
+name = "meowsystem-eyedropper"
 version = "0.6.2"
 edition = "2024"
 license = "MPL-2.0"
 description = "Eyedropper applet for cosmic desktop. Pick colours from the screen."
-repository = "https://github.com/nalladev/cosmic-ext-applet-eyedropper"
+repository = "https://github.com/vitoriamariadb/meowsystem-eyedropper"
 
 [dependencies]
 anyhow = "1"
@@ -54,19 +54,19 @@ features = [
 [package.metadata.deb]
 license-file = "LICENSE"
 assets = [
-  ["target/release/cosmic-ext-applet-eyedropper", "usr/bin/", "755"],
-  ["resources/app.desktop", "usr/share/applications/io.github.nalladev.CosmicExtAppletEyedropper.desktop", "644"],
-  ["resources/app.metainfo.xml", "usr/share/appdata/io.github.nalladev.CosmicExtAppletEyedropper.metainfo.xml", "644"],
-  ["resources/icon.svg", "usr/share/icons/hicolor/scalable/apps/io.github.nalladev.CosmicExtAppletEyedropper-symbolic.svg", "644"],
+  ["target/release/meowsystem-eyedropper", "usr/bin/", "755"],
+  ["resources/io.github.meowsystem.Eyedropper.desktop", "usr/share/applications/io.github.meowsystem.Eyedropper.desktop", "644"],
+  ["resources/io.github.meowsystem.Eyedropper.metainfo.xml", "usr/share/appdata/io.github.meowsystem.Eyedropper.metainfo.xml", "644"],
+  ["resources/io.github.meowsystem.Eyedropper-symbolic.svg", "usr/share/icons/hicolor/scalable/apps/io.github.meowsystem.Eyedropper-symbolic.svg", "644"],
 
 ]
 
 [package.metadata.generate-rpm]
 assets = [
-  { source = "target/release/cosmic-ext-applet-eyedropper", dest = "/usr/bin/cosmic-ext-applet-eyedropper", mode = "755" },
-  { source = "LICENSE", dest = "/usr/share/doc/cosmic-ext-applet-eyedropper/LICENSE", doc = true, mode = "644" },
-  { source = "resources/app.desktop", dest = "/usr/share/applications/io.github.nalladev.CosmicExtAppletEyedropper.desktop", mode = "644" },
-  { source = "resources/app.metainfo.xml", dest = "/usr/share/appdata/io.github.nalladev.CosmicExtAppletEyedropper.metainfo.xml", mode = "644" },
-  { source = "resources/icon.svg", dest = "/usr/share/icons/hicolor/scalable/apps/io.github.nalladev.CosmicExtAppletEyedropper-symbolic.svg", mode = "644" },
+  { source = "target/release/meowsystem-eyedropper", dest = "/usr/bin/meowsystem-eyedropper", mode = "755" },
+  { source = "LICENSE", dest = "/usr/share/doc/meowsystem-eyedropper/LICENSE", doc = true, mode = "644" },
+  { source = "resources/io.github.meowsystem.Eyedropper.desktop", dest = "/usr/share/applications/io.github.meowsystem.Eyedropper.desktop", mode = "644" },
+  { source = "resources/io.github.meowsystem.Eyedropper.metainfo.xml", dest = "/usr/share/appdata/io.github.meowsystem.Eyedropper.metainfo.xml", mode = "644" },
+  { source = "resources/io.github.meowsystem.Eyedropper-symbolic.svg", dest = "/usr/share/icons/hicolor/scalable/apps/io.github.meowsystem.Eyedropper-symbolic.svg", mode = "644" },
 
 ]

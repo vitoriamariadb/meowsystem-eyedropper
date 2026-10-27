@@ -36,11 +36,11 @@ jobs:
 
       - name: Validate manifest syntax
         run: |
-          flatpak-builder --show-manifest flatpak/io.github.nalladev.CosmicExtAppletEyedropper.json > /dev/null
+          flatpak-builder --show-manifest flatpak/io.github.meowsystem.Eyedropper.json > /dev/null
 
       - name: Validate AppStream metadata
         run: |
-          appstreamcli validate resources/app.metainfo.xml
+          appstreamcli validate resources/io.github.meowsystem.Eyedropper.metainfo.xml
 
       - name: Checkout flatpak-builder-tools
         run: |

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Insert a <release> entry into resources/app.metainfo.xml.
+"""Insert a <release> entry into resources/io.github.meowsystem.Eyedropper.metainfo.xml.
 
 Invoked by ``just release`` so the AppStream release notes shown in app centres
 (and required by Flathub) stay in sync with the git tag. Idempotent: if the
@@ -17,7 +17,7 @@ import re
 import sys
 import xml.sax.saxutils as sax
 
-METAINFO = "resources/app.metainfo.xml"
+METAINFO = "resources/io.github.meowsystem.Eyedropper.metainfo.xml"
 
 
 def clean_bullet(line: str) -> str:

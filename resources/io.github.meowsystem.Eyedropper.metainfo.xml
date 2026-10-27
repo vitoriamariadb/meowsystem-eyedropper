@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.nalladev.CosmicExtAppletEyedropper</id>
+  <id>io.github.meowsystem.Eyedropper</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
   <name>Eyedropper</name>
@@ -49,28 +49,28 @@
       <li xml:lang="pl">Zacznij pobierać kolor przy pomocy skrótu klawiaturowego</li>
     </ul>
   </description>
-  <icon type="stock">io.github.nalladev.CosmicExtAppletEyedropper-symbolic</icon>
-  <url type="homepage">https://github.com/nalladev/cosmic-ext-applet-eyedropper</url>
-  <url type="bugtracker">https://github.com/nalladev/cosmic-ext-applet-eyedropper/issues</url>
-  <url type="vcs-browser">https://github.com/nalladev/cosmic-ext-applet-eyedropper</url>
+  <icon type="stock">io.github.meowsystem.Eyedropper-symbolic</icon>
+  <url type="homepage">https://github.com/vitoriamariadb/meowsystem-eyedropper</url>
+  <url type="bugtracker">https://github.com/vitoriamariadb/meowsystem-eyedropper/issues</url>
+  <url type="vcs-browser">https://github.com/vitoriamariadb/meowsystem-eyedropper</url>
   <screenshots>
     <screenshot type="default">
       <caption>Magnifier in the color-picking state</caption>
       <caption xml:lang="cs">Lupa kapátka v režimu výběru barvy</caption>
       <caption xml:lang="pl">Lupa podczas pobierania koloru</caption>
-      <image>https://raw.githubusercontent.com/nalladev/cosmic-ext-applet-eyedropper/main/resources/screenshot-1.png</image>
+      <image>https://raw.githubusercontent.com/vitoriamariadb/meowsystem-eyedropper/main/resources/screenshot-1.png</image>
     </screenshot>
     <screenshot>
       <caption>The applet menu opened from the panel</caption>
       <caption xml:lang="cs">Nabídka appletu otevřená z panelu</caption>
       <caption xml:lang="pl">Otwarte menu apletu otwarte z panelu</caption>
-      <image>https://raw.githubusercontent.com/nalladev/cosmic-ext-applet-eyedropper/main/resources/screenshot-2.png</image>
+      <image>https://raw.githubusercontent.com/vitoriamariadb/meowsystem-eyedropper/main/resources/screenshot-2.png</image>
     </screenshot>
   </screenshots>
-  <launchable type="desktop-id">io.github.nalladev.CosmicExtAppletEyedropper.desktop</launchable>
+  <launchable type="desktop-id">io.github.meowsystem.Eyedropper.desktop</launchable>
   <provides>
     <id>com.system76.CosmicApplet</id>
-    <binary>cosmic-ext-applet-eyedropper</binary>
+    <binary>meowsystem-eyedropper</binary>
   </provides>
   <requires>
     <display_length compare="ge">360</display_length>
@@ -104,7 +104,7 @@
         <li>Thanks to VandaLHJ for the contribution</li>
       </ul>
     </description>
-    <url type="details">https://github.com/nalladev/cosmic-ext-applet-eyedropper/releases/tag/v0.6.2</url>
+    <url type="details">https://github.com/vitoriamariadb/meowsystem-eyedropper/releases/tag/v0.6.2</url>
   </release>
   <release version="0.6.1" date="2026-08-09">
     <description>
@@ -113,7 +113,7 @@
         <li>Screen capture now starts only after the popup has closed, so the frozen frame matches the moment you clicked</li>
       </ul>
     </description>
-    <url type="details">https://github.com/nalladev/cosmic-ext-applet-eyedropper/releases/tag/v0.6.1</url>
+    <url type="details">https://github.com/vitoriamariadb/meowsystem-eyedropper/releases/tag/v0.6.1</url>
   </release>
   <release version="0.6.0" date="2026-08-06">
     <description>
@@ -126,7 +126,7 @@
         <li>Reworked Flatpak tooling: one-command local test builds</li>
       </ul>
     </description>
-    <url type="details">https://github.com/nalladev/cosmic-ext-applet-eyedropper/releases/tag/v0.6.0</url>
+    <url type="details">https://github.com/vitoriamariadb/meowsystem-eyedropper/releases/tag/v0.6.0</url>
   </release>
 </releases>
 </component>

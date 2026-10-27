@@ -16,7 +16,7 @@ use cosmic::dbus_activation::DbusActivationInterfaceProxyBlocking;
 /// Print usage information for the command-line interface.
 fn print_help() {
     println!(
-        "Usage: cosmic-ext-applet-eyedropper [OPTIONS]\n\
+        "Usage: meowsystem-eyedropper [OPTIONS]\n\
          \n\
          COSMIC eyedropper applet — pick colours from the screen.\n\
          \n\
@@ -72,10 +72,10 @@ fn try_activate_existing_instance(action: &str) -> bool {
 
 fn main() -> cosmic::iced::Result {
     // Set up leveled logging (stderr → journald in production).  Users can
-    // override with RUST_LOG, e.g. RUST_LOG=cosmic_ext_applet_eyedropper=debug.
+    // override with RUST_LOG, e.g. RUST_LOG=meowsystem_eyedropper=debug.
     let _ = env_logger::Builder::from_env(
         env_logger::Env::default()
-            .default_filter_or("cosmic_ext_applet_eyedropper=info,wgpu=warn,cosmic=warn,iced=warn"),
+            .default_filter_or("meowsystem_eyedropper=info,wgpu=warn,cosmic=warn,iced=warn"),
     )
     .try_init();
 
