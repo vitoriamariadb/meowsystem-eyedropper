@@ -1,4 +1,12 @@
-# Eyedropper
+# Conta-gotas (Eyedropper)
+
+Um applet de conta-gotas para o [COSMIC](https://system76.com/cosmic), com as cores do theme pack do [MeowSystem](https://github.com/vitoriamariadb/MeowSystem).
+
+## De onde vem
+
+O Conta-gotas é um fork do **[cosmic-ext-applet-eyedropper](https://github.com/nalladev/cosmic-ext-applet-eyedropper)**, de **nalladev**. A captura, a lupa, os formatos de cor e o popup são trabalho dele. Este fork muda o nome (`meowsystem-eyedropper`, app id `io.github.meowsystem.Eyedropper`) e acrescenta a extensão de tema do MeowSystem, descrita em [INTEGRACAO.md](INTEGRACAO.md). A licença continua a do original, MPL-2.0 ([LICENSE](LICENSE)). Autoria do fork: Vitória Maria e André Farias.
+
+---
 
 An eyedropper applet for the [COSMIC](https://system76.com/cosmic) desktop. Pick any colour from your screen and copy it as hex, RGB, or HSL.
 
@@ -18,7 +26,11 @@ An eyedropper applet for the [COSMIC](https://system76.com/cosmic) desktop. Pick
 
 ## Installing
 
-Download the `.deb`, `.rpm`, or tarball from the [releases page](https://github.com/vitoriamariadb/meowsystem-eyedropper/releases/latest), or install from the COSMIC Store.
+The MeowSystem builds and installs it from the commit pinned in `assets/extensoes/eyedropper.pino`. By hand, see [INTEGRACAO.md](INTEGRACAO.md):
+
+```sh
+just install-user
+```
 
 Then restart the panel and add the applet:
 
@@ -36,7 +48,7 @@ Clone the repository and install with [just](https://github.com/casey/just):
 git clone https://github.com/vitoriamariadb/meowsystem-eyedropper
 cd meowsystem-eyedropper
 just build-release
-sudo just install
+just install-user
 ```
 
 Then restart the panel and add the applet as above.
@@ -60,4 +72,4 @@ Contributions are welcome. Feel free to open issues or submit pull requests.
 
 ## License
 
-[MPL-2.0](LICENSE)
+[MPL-2.0](LICENSE), as the upstream. Upstream authorship: nalladev. Fork: Vitória Maria and André Farias.

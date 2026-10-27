@@ -69,6 +69,18 @@ install:
     install -Dm0644 resources/io.github.meowsystem.Eyedropper.metainfo.xml {{appdata-dst}}
     install -Dm0644 resources/io.github.meowsystem.Eyedropper-symbolic.svg {{icon-dst}}
 
+# Installs in ~/.local, no root: binary, .desktop with the absolute Exec, icon and metainfo
+install-user: build-release
+    install -Dm0755 {{ cargo-target-dir / 'release' / name }} "$HOME/.local/bin/{{name}}"
+    mkdir -p "$HOME/.local/share/applications"
+    sed "s|^Exec=.*|Exec=$HOME/.local/bin/{{name}}|" resources/{{appid}}.desktop > "$HOME/.local/share/applications/{{appid}}.desktop"
+    install -Dm0644 resources/{{appid}}-symbolic.svg "$HOME/.local/share/icons/hicolor/scalable/apps/{{appid}}-symbolic.svg"
+    install -Dm0644 resources/{{appid}}.metainfo.xml "$HOME/.local/share/metainfo/{{appid}}.metainfo.xml"
+
+# Removes what install-user put in ~/.local
+uninstall-user:
+    rm -f "$HOME/.local/bin/{{name}}" "$HOME/.local/share/applications/{{appid}}.desktop" "$HOME/.local/share/icons/hicolor/scalable/apps/{{appid}}-symbolic.svg" "$HOME/.local/share/metainfo/{{appid}}.metainfo.xml"
+
 # Uninstalls installed files
 uninstall:
     rm {{bin-dst}} {{desktop-dst}} {{icon-dst}}
