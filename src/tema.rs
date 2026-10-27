@@ -266,6 +266,8 @@ fn sob(base: &std::path::Path, app_id: &str) -> PathBuf {
 mod tests {
     use super::*;
 
+    static AMBIENTE: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
     #[test]
     fn cor_aceita_so_hex() {
         assert_eq!(Cor::parse("#cba6f7"), Some(Cor([0xcb, 0xa6, 0xf7, 255])));
@@ -312,6 +314,7 @@ mod tests {
 
     #[test]
     fn arquivo_ausente_nao_derruba() {
+        let _trava = AMBIENTE.lock().unwrap_or_else(|e| e.into_inner());
         // SAFETY: os testes deste módulo são os únicos a mexer na variável.
         unsafe { std::env::set_var("MEOWSYSTEM_TEMA", "/nao/existe/tema.conf") };
         let tema = Tema::load("qualquer");
@@ -346,5 +349,53 @@ mod tests {
             sob(std::path::Path::new("/tmp/cfg-teste"), "io.github.meowsystem.Exemplo"),
             PathBuf::from("/tmp/cfg-teste/meowsystem/extensoes/io.github.meowsystem.Exemplo/tema.conf")
         );
+    }
+
+    #[test]
+    fn le_o_tema_conf_que_o_meowsystem_escreve_no_home() {
+        let _trava = AMBIENTE.lock().unwrap_or_else(|e| e.into_inner());
+        let app_id = <crate::app::AppModel as cosmic::Application>::APP_ID;
+        let casa = std::env::temp_dir().join(format!("meowsystem-eyedropper-casa-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&casa);
+        let arquivo = casa
+            .join(".config/meowsystem/extensoes")
+            .join(app_id)
+            .join("tema.conf");
+        std::fs::create_dir_all(arquivo.parent().unwrap()).unwrap();
+        std::fs::write(
+            &arquivo,
+            "acento = #cba6f7\ndestaque = #1e1e2e\nfundo = #1e1e2e\nborda = #45475a\n\
+             texto = #cdd6f4\nbloco = #313244\ntinta = #cdd6f4",
+        )
+        .unwrap();
+        let antes: Vec<_> = ["HOME", "XDG_CONFIG_HOME", "MEOWSYSTEM_TEMA"]
+            .iter()
+            .map(|nome| (*nome, std::env::var_os(nome)))
+            .collect();
+        // SAFETY: os testes deste módulo são os únicos a mexer nas variáveis, sob a trava.
+        unsafe {
+            std::env::set_var("HOME", &casa);
+            std::env::remove_var("XDG_CONFIG_HOME");
+            std::env::remove_var("MEOWSYSTEM_TEMA");
+        }
+        let tema = Tema::load(app_id);
+        let popup = tema.cosmic(true);
+        for (nome, valor) in antes {
+            // SAFETY: idem.
+            unsafe {
+                match valor {
+                    Some(v) => std::env::set_var(nome, v),
+                    None => std::env::remove_var(nome),
+                }
+            }
+        }
+        let _ = std::fs::remove_dir_all(&casa);
+
+        assert_eq!(tema.origem, Some(arquivo));
+        assert_eq!(tema.ignoradas, 0);
+        assert_eq!(tema.cores.len(), CORES.len());
+        assert_eq!(tema.cor("acento"), Cor::parse("#cba6f7"));
+        assert_eq!(tema.cor("tinta"), Cor::parse("#cdd6f4"));
+        assert!(popup.is_some());
     }
 }
