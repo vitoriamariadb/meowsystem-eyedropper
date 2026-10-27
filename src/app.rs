@@ -7,6 +7,7 @@ use crate::config::{ColorFormat, Config};
 use crate::fl;
 use crate::picker::PickerController;
 use crate::picker::{self, CapturedOutput, Color};
+use crate::tema::{Cor, Tema};
 use crate::widget::keyboard_wrapper::KeyboardWrapper;
 use crate::widget::magnifier::{
     GRID_SIZE, MAX_ZOOM, MIN_ZOOM, MagnifierProgram, MagnifierState, lens_rgba, mask_for_zoom,
@@ -172,6 +173,10 @@ pub struct AppModel {
 
     // ── Magnifier state ─────────────────────────────────────────────
     magnifier: MagnifierState,
+
+    // ── Theme pack extension ────────────────────────────────────────
+    /// Colours the MeowSystem theme pack puts over COSMIC's theme.
+    tema: Tema,
 }
 
 // ---------------------------------------------------------------------------
@@ -292,9 +297,11 @@ impl cosmic::Application for AppModel {
             copied_target: None,
             copied_at: None,
             magnifier: MagnifierState::new(),
+            tema: Tema::load(Self::APP_ID),
         };
 
-        (app, Task::none())
+        let tema = app.aplicar_tema(cosmic::theme::active().cosmic().is_dark, false);
+        (app, tema)
     }
 
     fn on_close_requested(&self, id: Id) -> Option<Message> {
@@ -321,9 +328,7 @@ impl cosmic::Application for AppModel {
 
     /// Draw the applet button in the panel.
     fn view(&self) -> Element<'_, Self::Message> {
-        self.core
-            .applet
-            .icon_button("color-select-symbolic")
+        crate::tema::botao(&self.core.applet, "color-select-symbolic", self.tinta())
             .on_press(Message::TogglePopup)
             .into()
     }
@@ -389,7 +394,8 @@ impl cosmic::Application for AppModel {
                 return if let Some(p) = self.popup.take() {
                     surface::surface_task(surface::action::destroy_popup(p))
                 } else {
-                    surface::surface_task(surface::action::app_popup(
+                    let tema = self.reler_tema();
+                    let abrir = surface::surface_task(surface::action::app_popup(
                         |_| LiveSettings::default(),
                         |app: &mut AppModel| {
                             let new_id = Id::unique();
@@ -409,7 +415,8 @@ impl cosmic::Application for AppModel {
                             popup_settings
                         },
                         None,
-                    ))
+                    ));
+                    Task::batch([tema, abrir])
                 };
             }
 
@@ -744,6 +751,7 @@ impl cosmic::Application for AppModel {
                 for oid in &picker.overlay_ids {
                     tasks.push(destroy_layer_surface(*oid));
                 }
+                tasks.push(self.reler_tema());
                 tasks.push(Self::open_popup());
                 return Task::batch(tasks);
             }
@@ -842,8 +850,15 @@ impl cosmic::Application for AppModel {
         _keys: &[&'static str],
         new_theme: &cosmic::cosmic_theme::Theme,
     ) -> Task<cosmic::Action<Self::Message>> {
-        let _ = new_theme;
-        Task::none()
+        self.aplicar_tema(new_theme.is_dark, false)
+    }
+
+    fn system_theme_mode_update(
+        &mut self,
+        _keys: &[&'static str],
+        mode: &cosmic::cosmic_theme::ThemeMode,
+    ) -> Task<cosmic::Action<Self::Message>> {
+        self.aplicar_tema(mode.is_dark, false)
     }
 
     fn style(&self) -> Option<cosmic::iced::theme::Style> {
@@ -856,6 +871,33 @@ impl cosmic::Application for AppModel {
 // ---------------------------------------------------------------------------
 
 impl AppModel {
+    /// The extension's colours over COSMIC's theme; without any, COSMIC's own,
+    /// as it was before the pack's were put on.
+    fn aplicar_tema(&self, dark: bool, antes: bool) -> Task<cosmic::Action<Message>> {
+        match self.tema.cosmic(dark) {
+            Some(theme) => cosmic::command::set_theme(theme),
+            None if antes => cosmic::command::set_theme(self.core.system_theme().clone()),
+            None => Task::none(),
+        }
+    }
+
+    /// Reads the extension again: the theme pack may have changed it since
+    /// the popup was last opened.
+    fn reler_tema(&mut self) -> Task<cosmic::Action<Message>> {
+        let novo = Tema::load(<Self as cosmic::Application>::APP_ID);
+        if novo == self.tema {
+            return Task::none();
+        }
+        let antes = self.tema.cosmic(true).is_some();
+        self.tema = novo;
+        self.aplicar_tema(cosmic::theme::active().cosmic().is_dark, antes)
+    }
+
+    /// The pack's ink for the panel icon, else the panel's own.
+    fn tinta(&self) -> Option<Cor> {
+        self.tema.cor("tinta")
+    }
+
     /// Update the cached color representation strings (hex, rgb, hsl) from a Color.
     fn update_color_strings(&mut self, color: Color) {
         self.hex = color.hex();
@@ -1333,6 +1375,7 @@ impl AppModel {
         // Always reopen – even when picker was None (e.g. Escape pressed
         // before capture completed) – to avoid leaving the user without UI.
         if self.popup.is_none() {
+            tasks.push(self.reler_tema());
             tasks.push(Self::open_popup());
         }
 

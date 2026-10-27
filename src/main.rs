@@ -4,6 +4,7 @@ mod activation;
 mod app;
 mod config;
 mod i18n;
+mod tema;
 pub mod picker;
 pub mod widget;
 
