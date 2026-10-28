@@ -3262,7 +3262,7 @@ dependencies = [
 
 [[package]]
 name = "meowsystem-eyedropper"
-version = "0.6.2"
+version = "0.6.3"
 dependencies = [
  "anyhow",
  "ashpd 0.12.3",
