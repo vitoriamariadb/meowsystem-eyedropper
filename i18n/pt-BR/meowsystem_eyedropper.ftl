@@ -1,0 +1,16 @@
+app-title = Conta-gotas
+about = Sobre
+view = Ver
+welcome = Boas-vindas ao COSMIC! ✨
+page-id = Página { $num }
+git-description = Commit {$hash} em {$date}
+hex = HEX
+rgb = RGB
+hsl = HSL
+select-colour = Escolher cor
+no-color-selected = Nenhuma cor escolhida
+copied = Copiado
+copy-on-select = Copiar ao escolher
+default-color-format = Formato de cor padrão
+no-outputs-captured = Nenhuma tela capturada
+capture-failed = Não deu para capturar a tela

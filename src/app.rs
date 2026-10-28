@@ -486,7 +486,7 @@ impl cosmic::Application for AppModel {
 
                 if captures.is_empty() {
                     log::error!("[picker]   captures is empty — error + cancel");
-                    self.error = Some("No outputs captured".into());
+                    self.error = Some(fl!("no-outputs-captured"));
                     // One-shot CLI mode: exit with a failure code instead of
                     // reopening the popup.
                     if self.flags.pick {
@@ -565,7 +565,7 @@ impl cosmic::Application for AppModel {
             // ── Capture failed ──────────────────────────────────────────
             Message::CaptureFailed(msg) => {
                 log::error!("[picker] CaptureFailed: {msg}");
-                self.error = Some(msg);
+                self.error = Some(fl!("capture-failed"));
                 // One-shot CLI mode: exit with a failure code instead of
                 // reopening the popup.
                 if self.flags.pick {

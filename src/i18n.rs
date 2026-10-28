@@ -49,3 +49,35 @@ macro_rules! fl {
         i18n_embed_fl::fl!($crate::i18n::LANGUAGE_LOADER, $message_id, $($args), *)
     }};
 }
+
+#[cfg(test)]
+mod tests {
+    fn chaves(ftl: &str) -> Vec<&str> {
+        ftl.lines()
+            .filter_map(|linha| linha.split_once('=').map(|(chave, _)| chave.trim()))
+            .filter(|chave| !chave.is_empty() && !chave.starts_with('#'))
+            .collect()
+    }
+
+    #[test]
+    fn pt_br_traz_toda_chave_do_ingles() {
+        let en = chaves(include_str!("../i18n/en/meowsystem_eyedropper.ftl"));
+        let pt = chaves(include_str!("../i18n/pt-BR/meowsystem_eyedropper.ftl"));
+        let faltam: Vec<_> = en.iter().filter(|chave| !pt.contains(chave)).collect();
+        assert!(faltam.is_empty(), "faltam em pt-BR: {faltam:?}");
+    }
+
+    #[test]
+    fn sobe_em_pt_br_com_lang_pt_br() {
+        unsafe {
+            std::env::set_var("LANG", "pt_BR.UTF-8");
+            for nome in ["LANGUAGE", "LC_ALL", "LC_MESSAGES"] {
+                std::env::remove_var(nome);
+            }
+        }
+        super::init(&i18n_embed::DesktopLanguageRequester::requested_languages());
+        assert_eq!(crate::fl!("select-colour"), "Escolher cor");
+        assert_eq!(crate::fl!("no-color-selected"), "Nenhuma cor escolhida");
+        assert_eq!(crate::fl!("copy-on-select"), "Copiar ao escolher");
+    }
+}

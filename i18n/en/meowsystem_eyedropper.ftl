@@ -12,3 +12,5 @@ no-color-selected = No colour selected
 copied = Copied
 copy-on-select = Copy on selection
 default-color-format = Default color format
+no-outputs-captured = No outputs captured
+capture-failed = Screen capture failed
