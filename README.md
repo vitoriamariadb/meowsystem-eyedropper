@@ -2,6 +2,8 @@
 
 Um applet de conta-gotas para o [COSMIC](https://system76.com/cosmic), com as cores do theme pack do [MeowSystem](https://github.com/vitoriamariadb/MeowSystem).
 
+<p align="center"><img src="docs/captura.png" alt="O popup do Conta-gotas na dock"></p>
+
 ## De onde vem
 
 O Conta-gotas é um fork do **[cosmic-ext-applet-eyedropper](https://github.com/nalladev/cosmic-ext-applet-eyedropper)**, de **nalladev**. A captura, a lupa, os formatos de cor e o popup são trabalho dele. Este fork muda o nome (`meowsystem-eyedropper`, app id `io.github.meowsystem.Eyedropper`) e acrescenta a extensão de tema do MeowSystem, descrita em [INTEGRACAO.md](INTEGRACAO.md). A licença continua a do original, MPL-2.0 ([LICENSE](LICENSE)). Autoria do fork: Vitória Maria e André Farias.
