@@ -187,6 +187,7 @@ pub struct AppModel {
 #[derive(Debug, Clone)]
 pub enum Message {
     TogglePopup,
+    Surface(cosmic::surface::Action),
     PopupClosed(Id),
     UpdateConfig(Config),
     /// The "Copy on selection" toggle was changed.
@@ -328,8 +329,11 @@ impl cosmic::Application for AppModel {
 
     /// Draw the applet button in the panel.
     fn view(&self) -> Element<'_, Self::Message> {
-        crate::tema::botao(&self.core.applet, "color-select-symbolic", self.tinta())
-            .on_press(Message::TogglePopup)
+        let botao = crate::tema::botao(&self.core.applet, "color-select-symbolic", self.tinta())
+            .on_press(Message::TogglePopup);
+        self.core
+            .applet
+            .applet_tooltip(botao, fl!("app-title"), self.popup.is_some(), Message::Surface, None)
             .into()
     }
 
@@ -379,6 +383,7 @@ impl cosmic::Application for AppModel {
     #[allow(clippy::too_many_lines, clippy::many_single_char_names)]
     fn update(&mut self, message: Self::Message) -> Task<cosmic::Action<Self::Message>> {
         match message {
+            Message::Surface(acao) => return cosmic::surface::surface_task(acao),
             Message::TogglePopup => {
                 // Ignore while in picker mode or while entering it: between
                 // the "Select Colour" press and the moment the overlays are
